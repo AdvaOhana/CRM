@@ -1,23 +1,53 @@
-       body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f0f0f0;
-        }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+ body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
 
-        .container {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 20px;
-            margin: 0 auto;
-            padding: 20px;
-            word-break: break-word;
-        }
+.container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    margin: 0 auto;
+    padding: 20px;
+    word-break: break-word;
+}
 
-        .card {
-            background-color: #f9f9f9;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            padding: 20px;
-            gap: 15px;
-        }
+.card {
+    border-radius: 12px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    gap: 15px;
+}
+.nav-container{
+  background-color: #333;
+  padding: 0 30px;
+  height: 110px;
+ display: flex;
+}
+.nav-container ul{
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+.nav-container li{
+    display: flex;
+    align-items: flex-end;
+}
+.nav-container li a {
+  text-decoration: none;
+  color: white;
+  padding: 15px 16px;
+}
+.nav-container li a:hover,.active {
+    background-color: #555;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}

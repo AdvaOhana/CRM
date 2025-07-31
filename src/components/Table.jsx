@@ -14,7 +14,7 @@ export default function Table({ customers }) {
                 {customers.map((row, idx) => (
                     <tr key={idx}>
                         {headers.map(key => (
-                            <td style={{ border: '1px solid black' }}>{row[key]}</td>
+                            <td key={key} style={{ border: '1px solid black' }}>{row[key]}</td>
                         ))}
                     </tr>
                 ))}
