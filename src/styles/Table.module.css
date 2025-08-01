@@ -1,0 +1,37 @@
+.table {
+  border-collapse: collapse;
+  width: fit-content;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+
+}
+
+.th, .td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+.td{
+max-width: 400px;
+word-break: break-all;
+}
+
+.th {
+  background-color: #f1f1f1;
+  font-weight: bold;
+  width: fit-content;
+}
+.tr:hover{
+  background-color: #fafafa;
+  transition: background-color 0.3s ease;
+}
+
+
+.tableWrapper {
+  overflow-x: auto;
+  margin: 20px;
+    display: flex;
+  justify-content: center;
+}
