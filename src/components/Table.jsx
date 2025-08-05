@@ -1,4 +1,8 @@
 import styles from '../styles/Table.module.css'
+import { FaCog } from 'react-icons/fa'
+import ActionMenu from './ActionMenu'
+
+
 
 export default function Table({ customers }) {
     const headers = Object.keys(customers[0])
@@ -11,6 +15,8 @@ export default function Table({ customers }) {
                         {headers.map(key => (
                             <th key={key} className={styles.th}>{key}</th>
                         ))}
+                        <th className={styles.th}><FaCog /></th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -19,6 +25,9 @@ export default function Table({ customers }) {
                             {headers.map(key => (
                                 <td key={key} className={styles.td}>{row[key]}</td>
                             ))}
+                            <td className={styles.td}>
+                                <ActionMenu customerId={row.id} />
+                            </td>
                         </tr>
                     ))}
                 </tbody>

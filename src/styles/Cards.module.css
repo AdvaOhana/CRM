@@ -2,9 +2,9 @@
   display: grid;
   grid-template-columns: repeat(5,1fr);
   gap: 20px;
-      margin: 0 auto;
-    padding: 20px;
-    word-break: break-word;
+  margin: 0 auto;
+  padding: 20px;
+  word-break: break-word;
 }
 
 .card {
@@ -17,4 +17,8 @@
 
 .card:hover {
   transform: translateY(-5px);
+}
+ .cardContent {
+  display: flex;
+  justify-content: space-between;
 }
