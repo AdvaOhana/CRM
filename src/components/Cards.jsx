@@ -1,10 +1,13 @@
 import styles from '../styles/Cards.module.css'
 import ActionMenu from './ActionMenu'
+import { useNavigate } from 'react-router-dom';
+
 export default function Cards({ customers }) {
+    const navigate = useNavigate();
 
     return (<div className={styles.container}>
         {Object.entries(customers).map(([key, value]) => (
-            <div key={key} className={styles.card}>
+            <div key={key} className={styles.card} onClick={() => navigate(`${value.id}`)} style={{ cursor: 'pointer' }}>
                 <div className={styles.cardContent}>
                     <div>
                         {Object.entries(value).map(([k, v]) =>
@@ -16,7 +19,7 @@ export default function Cards({ customers }) {
                         )}
                     </div>
 
-                    <ActionMenu customerId={value.id} />
+                    <ActionMenu onClick={e => e.stopPropagation()} customerId={value.id} />
                 </div>
             </div>
         ))}

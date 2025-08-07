@@ -1,11 +1,14 @@
 import styles from '../styles/Table.module.css'
 import { FaCog } from 'react-icons/fa'
 import ActionMenu from './ActionMenu'
+import { useNavigate } from 'react-router-dom';
+
 
 
 
 export default function Table({ customers }) {
     const headers = Object.keys(customers[0])
+    const navigate = useNavigate();
 
     return (
         <div className={styles.tableWrapper}>
@@ -21,12 +24,14 @@ export default function Table({ customers }) {
                 </thead>
                 <tbody>
                     {customers.map((row, idx) => (
-                        <tr key={idx} className={styles.tr}>
+                        <tr key={idx} className={styles.tr} onClick={() => navigate(`${row.id}`)} style={{ cursor: 'pointer' }}
+                        >
+
                             {headers.map(key => (
                                 <td key={key} className={styles.td}>{row[key]}</td>
                             ))}
                             <td className={styles.td}>
-                                <ActionMenu customerId={row.id} />
+                                <ActionMenu onClick={e => e.stopPropagation()} customerId={row.id} />
                             </td>
                         </tr>
                     ))}

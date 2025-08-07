@@ -6,7 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-export default function ActionMenu({ customerId }) {
+export default function ActionMenu({ onClick, customerId }) {
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (event) => {
@@ -15,15 +15,15 @@ export default function ActionMenu({ customerId }) {
 
 
     const handleEdit = () => {
-        alert('עריכה');
+        alert(customerId);
     };
 
     const handleDelete = () => {
-        alert('מחיקה');
+        alert(`${customerId} del`);
     };
 
     return (
-        <div>
+        <div onClick={onClick}>
             <IconButton onClick={handleClick}><MoreVertIcon /></IconButton>
             <Menu
                 anchorEl={anchorEl}

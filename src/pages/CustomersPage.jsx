@@ -9,13 +9,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from 'react';
 import AddForm from '../components/AddForm';
-import { customers as initinalCustomers } from '../data/myObj'
 
 
-export default function CustomersPage() {
+export default function CustomersPage({ onAddCustomer, customers }) {
     const { isCard, toggleView } = useView()
     const [open, setOpen] = useState(false);
-    const [customers, setCustomers] = useState(initinalCustomers)
 
 
     function handleOpen() {
@@ -23,7 +21,7 @@ export default function CustomersPage() {
     }
 
     function handleAddCustomer(newCustomer) {
-        setCustomers(customers => [...customers, newCustomer])
+        onAddCustomer(customers => [...customers, newCustomer])
     }
 
     return <div>
