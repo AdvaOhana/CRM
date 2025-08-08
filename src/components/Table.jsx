@@ -2,13 +2,16 @@ import styles from '../styles/Table.module.css'
 import { FaCog } from 'react-icons/fa'
 import ActionMenu from './ActionMenu'
 import { useNavigate } from 'react-router-dom';
+import { useCustomers } from "../contexts/CustomerContext"
 
 
 
 
-export default function Table({ customers }) {
+export default function Table() {
+    const { customers } = useCustomers()
     const headers = Object.keys(customers[0])
     const navigate = useNavigate();
+
 
     return (
         <div className={styles.tableWrapper}>

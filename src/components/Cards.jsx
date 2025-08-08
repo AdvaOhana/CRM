@@ -1,9 +1,12 @@
 import styles from '../styles/Cards.module.css'
 import ActionMenu from './ActionMenu'
 import { useNavigate } from 'react-router-dom';
+import { useCustomers } from "../contexts/CustomerContext"
 
-export default function Cards({ customers }) {
+
+export default function Cards() {
     const navigate = useNavigate();
+    const { customers } = useCustomers()
 
     return (<div className={styles.container}>
         {Object.entries(customers).map(([key, value]) => (

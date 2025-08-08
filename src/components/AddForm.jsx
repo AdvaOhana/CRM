@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function AddForm({ onAddCustomer }) {
+export default function AddForm({ addCustomer }) {
     const [name, setName] = useState("")
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
@@ -17,7 +17,7 @@ export default function AddForm({ onAddCustomer }) {
             email,
             description
         }
-        onAddCustomer(newCustomer)
+        addCustomer(newCustomer)
         setName("")
         setPhone("")
         setEmail("")
