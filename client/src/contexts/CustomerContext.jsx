@@ -1,22 +1,68 @@
+import { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
-import { customers as initinalCustomers } from '../data/myObj'
 
 const CustomerContext = createContext()
 
 export function CustomerProvider({ children }) {
 
-    const [customers, setCustomers] = useState(initinalCustomers)
+    const [customers, setCustomers] = useState([])
+    useEffect(() => {
+        async function fetchCustomers() {
+            try {
+                const res = await fetch('/api/clients')
+                const data = await res.json()
+                setCustomers(data.clients)
+            } catch (error) {
+                console.log(error);
 
-    function updateCustomer(customer) {
-        setCustomers((cur) => cur.map((c) => c.id === customer.id ? customer : c))
+            }
+
+        }
+        fetchCustomers()
+    }, [])
+
+    async function addCustomer(customer) {
+        try {
+            const res = await fetch('/api/clients/addClient', {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(customer)
+            })
+            if (!res.ok) throw new Error("Failed to create client")
+            setCustomers((customers) => [...customers, customer])
+
+        } catch (error) {
+            console.log(error);
+        }
     }
-    function deleteCustomer(id) {
+
+    async function updateCustomer(customer) {
+        try {
+            const res = await fetch(`/api/clients/updateClient/${customer._id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(customer)
+            })
+            if (!res.ok) throw new Error("Failed to update client");
+
+            setCustomers((cur) => cur.map((c) => c._id === customer._id ? customer : c))
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    async function deleteCustomer(id) {
         const confirmed = window.confirm("Are you sure you want to delete this customer?")
         if (!confirmed) return
-        setCustomers((cur) => cur.filter((c) => c.id !== id))
-    }
-    function addCustomer(customer) {
-        setCustomers((customers) => [...customers, customer])
+        try {
+            const res = await fetch(`api/clients/deleteClient/${id}`, {
+                method: "DELETE",
+            })
+            if (!res.ok) throw new Error("Failed to delete client");
+            setCustomers((cur) => cur.filter((c) => c._id !== id))
+
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (

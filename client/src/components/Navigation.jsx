@@ -7,7 +7,7 @@ export default function Navigation() {
         <nav className={styles['nav-container']}>
             <ul className={styles.navList}>
                 <li><NavLink to="/" className={styles.link}> <FaHome /> Home</NavLink></li>
-                <li><NavLink to="/customers" className={styles.link}> <FaUsers /> Customers</NavLink></li>
+                <li><NavLink to="/clients" className={styles.link}> <FaUsers /> Customers</NavLink></li>
             </ul>
         </nav >
     )

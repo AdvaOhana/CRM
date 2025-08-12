@@ -9,12 +9,12 @@ export default function Cards() {
     const { customers } = useCustomers()
 
     return (<div className={styles.container}>
-        {Object.entries(customers).map(([key, value]) => (
-            <div key={key} className={styles.card} onClick={() => navigate(`${value.id}`)} style={{ cursor: 'pointer' }}>
+        {customers.length ? Object.entries(customers).map(([key, value]) => (
+            <div key={key} className={styles.card} onClick={() => navigate(`${value._id}`)} style={{ cursor: 'pointer' }}>
                 <div className={styles.cardContent}>
                     <div>
                         {Object.entries(value).map(([k, v]) =>
-                            k !== 'id' ? (
+                            k !== '_id' ? (
                                 <p key={k}>
                                     <strong>{k}:</strong> {v}
                                 </p>
@@ -22,10 +22,10 @@ export default function Cards() {
                         )}
                     </div>
 
-                    <ActionMenu onClick={e => e.stopPropagation()} customerId={value.id} />
+                    <ActionMenu onClick={e => e.stopPropagation()} customerId={value._id} />
                 </div>
             </div>
-        ))}
+        )) : null}
     </div>
     )
 }

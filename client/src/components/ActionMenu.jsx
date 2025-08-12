@@ -25,7 +25,7 @@ export default function ActionMenu({ onClick, customerId }) {
                 open={Boolean(anchorEl)}
                 onClose={() => setAnchorEl(null)}
             >
-                <MenuItem onClick={() => navigate(`/customers/${customerId}`)}>
+                <MenuItem onClick={() => navigate(`/clients/${customerId}`)}>
                     <EditIcon fontSize="small" style={{ marginRight: 8 }} />
                     Edit
                 </MenuItem>

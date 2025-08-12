@@ -4,13 +4,12 @@ import { getClients, createClients, updateClient, deleteClient } from "../db/dbU
 export const clientRouter = Router();
 
 clientRouter.get('/', async (req, res) => {
+
     return res.status(200).json({ clients: await getClients() })
 })
 clientRouter.post('/addClient', async (req, res) => {
     try {
-        const payload = req.body
-
-        await createClients(payload)
+        await createClients(req.body)
         return res.status(200).json({ message: "created client successfully" })
     } catch (error) {
         return res.status(400)

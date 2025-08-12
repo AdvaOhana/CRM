@@ -12,7 +12,7 @@ export default function App() {
         <Routes>
             <Route path='/' element={<AppLayOut />} >
                 <Route index element={<HomePage />} />
-                <Route path='customers'>
+                <Route path='clients'>
                     <Route index element={<CustomersPage />} />
                     <Route path=':id' element={<EditPage />} />
                 </Route>

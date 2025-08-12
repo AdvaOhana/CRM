@@ -10,7 +10,7 @@ export default function EditPage() {
     const navigate = useNavigate()
 
 
-    const customer = customers.find((customer) => customer.id === Number(id))
+    const customer = customers.find((customer) => customer._id === id)
     const [data, setData] = useState(customer)
 
 
@@ -18,16 +18,17 @@ export default function EditPage() {
         e.preventDefault()
         updateCustomer(data)
         setEdit(false)
-        navigate("/customers")
+        navigate("/clients")
 
     }
     function handleChange(e) {
         const { id, value } = e.target
+
         setData((current) => ({ ...current, [id]: value }))
     }
     function handleDelete() {
-        deleteCustomer(data.id)
-        navigate("/customers")
+        deleteCustomer(data._id)
+        navigate("/clients")
 
     }
 
@@ -37,13 +38,14 @@ export default function EditPage() {
             <Button onClick={() => setEdit((edit) => !edit)}>{edit ? 'Cancel' : 'Edit'}</Button>
             <form onSubmit={handleSubmit}>
                 {Object.entries(data).map(([key, value]) => (
-                    <div key={key}>
-                        <strong>{key}:</strong>
-                        {edit && key !== "id" ? (
-                            <input type="text" id={key} value={value} onChange={handleChange} />
-                        ) : (<span>{value}</span>)}
-                    </div>
-                ))}
+                    key !== "_id" ? (
+                        <div key={key}>
+                            <strong>{key}:</strong>
+                            {edit && key !== "_id" ? (
+                                <input type="text" id={key} value={value} onChange={handleChange} />
+                            ) : (<span>{value}</span>)}
+                        </div>
+                    ) : null))}
                 {edit && (
                     <>
                         <Button onClick={handleDelete}>Delete</Button>

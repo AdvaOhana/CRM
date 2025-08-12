@@ -9,7 +9,7 @@ import { useCustomers } from "../contexts/CustomerContext"
 
 export default function Table() {
     const { customers } = useCustomers()
-    const headers = Object.keys(customers[0])
+    const headers = Object.keys(customers[0] || [])
     const navigate = useNavigate();
 
 
@@ -19,22 +19,24 @@ export default function Table() {
                 <thead >
                     <tr className={styles.tr}>
                         {headers.map(key => (
-                            <th key={key} className={styles.th}>{key}</th>
-                        ))}
+                            key !== "_id" ? (
+                                <th key={key} className={styles.th}>{key}</th>
+                            ) : null))}
                         <th className={styles.th}><FaCog /></th>
 
                     </tr>
                 </thead>
                 <tbody>
                     {customers.map((row, idx) => (
-                        <tr key={idx} className={styles.tr} onClick={() => navigate(`${row.id}`)} style={{ cursor: 'pointer' }}
+                        <tr key={idx} className={styles.tr} onClick={() => navigate(`${row._id}`)} style={{ cursor: 'pointer' }}
                         >
 
                             {headers.map(key => (
-                                <td key={key} className={styles.td}>{row[key]}</td>
-                            ))}
+                                key !== "_id" ? (
+                                    <td key={key} className={styles.td}>{row[key]}</td>
+                                ) : null))}
                             <td className={styles.td}>
-                                <ActionMenu onClick={e => e.stopPropagation()} customerId={row.id} />
+                                <ActionMenu onClick={e => e.stopPropagation()} customerId={row._id} />
                             </td>
                         </tr>
                     ))}

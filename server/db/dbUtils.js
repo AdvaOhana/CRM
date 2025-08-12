@@ -29,7 +29,7 @@ export async function updateClient(id, { name, phone, email, description }) {
         throw new Error("failed to update")
     }
 }
-export async function deleteClient(id) {
+export async function deleteClient({ id }) {
     try {
         await collection.deleteOne({ _id: new ObjectId(id) })
     } catch (error) {
