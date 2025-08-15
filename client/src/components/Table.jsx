@@ -2,16 +2,17 @@ import styles from '../styles/Table.module.css'
 import { FaCog } from 'react-icons/fa'
 import ActionMenu from './ActionMenu'
 import { useNavigate } from 'react-router-dom';
-import { useCustomers } from "../contexts/CustomerContext"
+import { useCustomers } from '../hooks/useCustomers';
 
 
 
 
 export default function Table() {
-    const { customers } = useCustomers()
-    const headers = Object.keys(customers[0] || [])
+    const { data: customers, isLoading, error } = useCustomers()
+    const headers = Object.keys(customers?.[0] || [])
     const navigate = useNavigate();
-
+    if (isLoading) return <p>Loading...</p>;
+    if (error) return <p style={{ color: 'red' }}>Error: {error.message}</p>;
 
     return (
         <div className={styles.tableWrapper}>

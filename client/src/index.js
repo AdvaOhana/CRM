@@ -4,17 +4,19 @@ import './global.css';
 import App from '../src/components/App'
 import { ViewProvider } from './contexts/ViewContext';
 import { BrowserRouter } from 'react-router-dom';
-import { CustomerProvider } from './contexts/CustomerContext';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+
+const queryClient = new QueryClient()
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ViewProvider>
-      <CustomerProvider>
+    <QueryClientProvider client={queryClient}>
+      <ViewProvider>
         <BrowserRouter>
           <App />
         </BrowserRouter>
-      </CustomerProvider>
-    </ViewProvider>
+      </ViewProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );

@@ -1,22 +1,27 @@
 import { useState } from "react"
 import Button from "../components/Button"
-import { useCustomers } from "../contexts/CustomerContext"
 import { useParams, useNavigate } from "react-router-dom";
+import { useCustomers, useUpdateCustomer, useDeleteCustomer } from "../hooks/useCustomers";
+
 
 export default function EditPage() {
     const { id } = useParams()
+    const { data: customers, isLoading, error } = useCustomers();
+    const updateCustomer = useUpdateCustomer();
+    const deleteCustomer = useDeleteCustomer();
     const [edit, setEdit] = useState(false)
-    const { customers, updateCustomer, deleteCustomer } = useCustomers()
     const navigate = useNavigate()
 
 
     const customer = customers.find((customer) => customer._id === id)
     const [data, setData] = useState(customer)
 
+    if (isLoading) return <p>Loading...</p>;
+    if (error) return <p style={{ color: 'red' }}>Error: {error.message}</p>;
 
     function handleSubmit(e) {
         e.preventDefault()
-        updateCustomer(data)
+        updateCustomer.mutate(data)
         setEdit(false)
         navigate("/clients")
 
@@ -27,7 +32,7 @@ export default function EditPage() {
         setData((current) => ({ ...current, [id]: value }))
     }
     function handleDelete() {
-        deleteCustomer(data._id)
+        deleteCustomer.mutate(data._id)
         navigate("/clients")
 
     }

@@ -3,17 +3,18 @@ import cors from "cors";
 import { clientRouter } from './routers/clients.js'
 import { startDataBaseConnection } from "./db/database.js";
 
-const PORT = 3000;
+const PORT = 3001;
 const app = express();
-// app.use(
-//     cors({
-//         origin: [
-//             "http://localhost:3000",
-//         ],
-//         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-//         credentials: true,
-//     })
-// );
+app.use(cors());
+app.use(
+    cors({
+        origin: [
+            "http://localhost:3000",
+        ],
+        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+        credentials: true,
+    })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 app.use("/api/clients", clientRouter);

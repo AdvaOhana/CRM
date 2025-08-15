@@ -1,12 +1,16 @@
 import styles from '../styles/Cards.module.css'
 import ActionMenu from './ActionMenu'
 import { useNavigate } from 'react-router-dom';
-import { useCustomers } from "../contexts/CustomerContext"
+// import { useCustomers } from "../contexts/CustomerContext"
+import { useCustomers } from '../hooks/useCustomers';
 
 
 export default function Cards() {
     const navigate = useNavigate();
-    const { customers } = useCustomers()
+    const { data: customers, isLoading, error } = useCustomers()
+    if (isLoading) return <p>Loading...</p>;
+    if (error) return <p style={{ color: 'red' }}>Error: {error.message}</p>;
+
 
     return (<div className={styles.container}>
         {customers.length ? Object.entries(customers).map(([key, value]) => (
