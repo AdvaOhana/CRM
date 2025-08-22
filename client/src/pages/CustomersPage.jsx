@@ -1,5 +1,5 @@
 import { FaUserPlus, FaThLarge, FaTable } from 'react-icons/fa';
-import { useCustomers, useAddCustomer } from '../hooks/useCustomers';
+import { useCustomers } from '../hooks/useCustomers';
 import { useView } from '../contexts/ViewContext'
 import { useState } from 'react';
 import Cards from '../components/Cards'
@@ -14,7 +14,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 export default function CustomersPage() {
     const { isCard, toggleView } = useView()
     const { data: customers, isLoading, error } = useCustomers();
-    const addCustomer = useAddCustomer()
     const [open, setOpen] = useState(false);
 
 
@@ -22,9 +21,7 @@ export default function CustomersPage() {
         setOpen(open => !open)
     }
 
-    function handleAddCustomer(newCustomer) {
-        addCustomer.mutate(newCustomer)
-    }
+
     if (isLoading) return <p>Loading...</p>;
     if (error) return <p style={{ color: 'red' }}>Error: {error.message}</p>;
 
@@ -39,7 +36,7 @@ export default function CustomersPage() {
             <Dialog open={open} onClose={handleOpen}>
                 <DialogTitle>Add New Customer</DialogTitle>
                 <DialogContent>
-                    <AddForm addCustomer={handleAddCustomer} />
+                    <AddForm />
                 </DialogContent>
             </Dialog>
         </>

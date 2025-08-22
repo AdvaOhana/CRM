@@ -1,37 +1,36 @@
 import { Router } from "express";
-import { getClients, createClients, updateClient, deleteClient } from "../db/dbUtils.js"
-
+import { getClientsService, createClientsService, updateClientService, deleteClientService } from '../services/clientService.js'
 export const clientRouter = Router();
 
 clientRouter.get('/', async (req, res) => {
 
-    return res.status(200).json({ clients: await getClients() })
+    return res.status(200).json({ clients: await getClientsService() })
 })
 clientRouter.post('/addClient', async (req, res) => {
     try {
-        await createClients(req.body)
+        await createClientsService(req.body)
         return res.status(200).json({ message: "created client successfully" })
     } catch (error) {
-        return res.status(400)
+        return res.status(400).json({ error: error.message })
     }
 })
 clientRouter.patch('/updateClient/:id', async (req, res) => {
     try {
         const id = req.params
-        await updateClient(id, req.body)
+        await updateClientService(id, req.body)
         return res.status(200).json({ message: "updated client successfully" })
 
     } catch (error) {
-        return res.status(400)
+        return res.status(400).json({ error: error.message })
     }
 })
 clientRouter.delete('/deleteClient/:id', async (req, res) => {
     try {
         const id = req.params
-        await deleteClient(id)
+        await deleteClientService(id)
         return res.status(200).json({ message: "deleted client successfully" })
 
     } catch (error) {
-        return res.status(400)
+        return res.status(400).json({ error: error.message })
     }
 })

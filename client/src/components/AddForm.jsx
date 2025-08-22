@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { useAddCustomer } from '../hooks/useCustomers';
 
-export default function AddForm({ addCustomer }) {
+export default function AddForm() {
+    const { mutate: addCustomer, isPending } = useAddCustomer()
+
     const [name, setName] = useState("")
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
@@ -28,7 +31,7 @@ export default function AddForm({ addCustomer }) {
         <input type='text' placeholder='Phone' value={phone} onChange={(e) => setPhone(e.target.value)} />
         <input type='text' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} />
         <input type='text' placeholder='Description' value={description} onChange={(e) => setDescription(e.target.value)} />
-        <button>Add</button>
+        <button disable={isPending}>{isPending ? 'Creating...' : 'Add'}</button>
     </form>
     )
 }

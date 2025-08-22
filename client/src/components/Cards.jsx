@@ -1,7 +1,6 @@
 import styles from '../styles/Cards.module.css'
 import ActionMenu from './ActionMenu'
 import { useNavigate } from 'react-router-dom';
-// import { useCustomers } from "../contexts/CustomerContext"
 import { useCustomers } from '../hooks/useCustomers';
 
 
