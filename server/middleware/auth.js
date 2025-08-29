@@ -5,7 +5,7 @@ dotenv.config()
 export function verifyToken(req, res, next) {
     const { jwt: token } = req.cookies
 
-    if (!token) return next();
+    if (!token) return next()
 
     try {
         const { id, role } = jwt.verify(token, process.env.JWT_SECRET)
@@ -28,5 +28,18 @@ export function authRole(req, res, next) {
     } catch (error) {
         return res.status(404).json({ message: error?.message || message });
 
+    }
+}
+
+export function authCookie(req, res, next) {
+    const token = req.cookies?.jwt;
+    if (!token) return res.status(401).json({ message: "Unauthenticated user" });
+    try {
+
+        req.user = jwt.verify(token, process.env.JWT_SECRET);
+
+        next()
+    } catch (error) {
+        return res.status(403).json({ message: "expired token" });
     }
 }

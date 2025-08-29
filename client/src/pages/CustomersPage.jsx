@@ -10,11 +10,13 @@ import AddForm from '../components/AddForm';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useNavigate } from 'react-router-dom';
 
 export default function CustomersPage() {
     const { isCard, toggleView } = useView()
     const { data: customers, isLoading, error } = useCustomers();
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
 
 
     function handleOpen() {
@@ -30,7 +32,8 @@ export default function CustomersPage() {
         <div>
             <Button onClick={toggleView}>Switch to {!isCard ? <> Card < FaThLarge /></> : <>Table < FaTable /></>}</Button>
             <Button onClick={handleOpen}><FaUserPlus /></Button>
-            {!isCard ? <Table customers={customers} /> : <Cards customers={customers} />}
+            {!isCard ? <Table data={customers} onRowClick={customer => navigate(`${customer._id}`)} /> :
+                <Cards data={customers} onCardClick={customer => navigate(`${customer._id}`)} />}
         </div>
         <>
             <Dialog open={open} onClose={handleOpen}>

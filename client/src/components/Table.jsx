@@ -1,18 +1,20 @@
 import styles from '../styles/Table.module.css'
 import { FaCog } from 'react-icons/fa'
 import ActionMenu from './ActionMenu'
-import { useNavigate } from 'react-router-dom';
-import { useCustomers } from '../hooks/useCustomers';
+// import { useNavigate } from 'react-router-dom';
+// import { useCustomers } from '../hooks/useCustomers';
 
 
 
 
-export default function Table() {
-    const { data: customers, isLoading, error } = useCustomers()
-    const headers = Object.keys(customers?.[0] || [])
-    const navigate = useNavigate();
-    if (isLoading) return <p>Loading...</p>;
-    if (error) return <p style={{ color: 'red' }}>Error: {error.message}</p>;
+export default function Table({ data = [], onRowClick }) {
+    // const { data: customers, isLoading, error } = useCustomers()
+    if (!data.length) return <p>No data available</p>;
+
+    const headers = Object.keys(data[0])
+    // const navigate = useNavigate();
+    // if (isLoading) return <p>Loading...</p>;
+    // if (error) return <p style={{ color: 'red' }}>Error: {error.message}</p>;
 
     return (
         <div className={styles.tableWrapper}>
@@ -28,8 +30,8 @@ export default function Table() {
                     </tr>
                 </thead>
                 <tbody>
-                    {customers.map((row, idx) => (
-                        <tr key={idx} className={styles.tr} onClick={() => navigate(`${row._id}`)} style={{ cursor: 'pointer' }}
+                    {data.map((row, idx) => (
+                        <tr key={idx} className={styles.tr} onClick={() => onRowClick?.(row)} style={{ cursor: 'pointer' }}
                         >
 
                             {headers.map(key => (

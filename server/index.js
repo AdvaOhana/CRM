@@ -6,10 +6,10 @@ dotenv.config()
 import { clientRouter } from './routers/clients.js'
 import { userRouter } from './routers/users.js'
 import { startDataBaseConnection } from "./db/database.js";
+import { authRouter } from "./routers/auth.js";
 
 
 const app = express();
-app.use(cors());
 app.use(
     cors({
         origin: [
@@ -24,6 +24,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }))
 app.use("/api/clients", clientRouter);
 app.use("/api/users", userRouter)
+app.use("/api/auth", authRouter)
 
 
 const startApp = () => {

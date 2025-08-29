@@ -3,7 +3,7 @@ import { getUserService, createUserService, updateUserService, deleteUserService
 import { verifyToken, authRole } from "../middleware/auth.js";
 export const userRouter = Router();
 
-userRouter.get('/allUsers', async (req, res) => {
+userRouter.get('/', async (req, res) => {
     return res.status(200).json({ users: await getUserService() })
 
 })
@@ -67,3 +67,4 @@ userRouter.delete('/deleteUser/:id', async (req, res) => {
         return res.status(400).json({ error: error.message })
     }
 })
+

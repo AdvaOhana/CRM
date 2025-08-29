@@ -1,10 +1,24 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
+
 async function fetchCustomers() {
-    const res = await fetch('http://localhost:3001/api/clients')
-    if (!res.ok) throw new Error("Failed to fetch clients");
-    const data = await res.json()
-    return data.clients
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 30000)
+    try {
+        const res = await fetch('http://localhost:3001/api/clients', { signal: controller.signal })
+        if (!res.ok) throw new Error("Failed to fetch clients");
+        const data = await res.json()
+        return data.clients
+
+    } catch (error) {
+        if (error.name === "AbortError") {
+            throw new Error("Server took too long to respond (30s)");
+        }
+        throw error;
+    } finally {
+        clearTimeout(timeout);
+    }
+
 }
 export function useCustomers() {
     return useQuery({

@@ -46,7 +46,7 @@ export async function deleteClient({ id }) {
 }
 //users CRUD   
 export async function getUsers() {
-    return await usersCollection.find({}).toArray()
+    return await usersCollection.find({}, { projection: { password: 0 } }).toArray()
 }
 export async function createUser({ name, role, email, phone, password }) {
     try {
