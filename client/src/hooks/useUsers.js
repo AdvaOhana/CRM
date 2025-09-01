@@ -73,6 +73,23 @@ export function useLogin() {
         }
     })
 }
+async function fetchAuth() {
+    const res = await fetch('http://localhost:3001/api/auth', {
+        credentials: 'include'
+    });
+    if (!res.ok) throw new Error("Failed to fetch auth");
+    const data = await res.json();
+    return data.user;
+}
+
+export function useAuthQuery() {
+    return useQuery({
+        queryKey: ['auth'],
+        queryFn: fetchAuth,
+        retry: false,
+        staleTime: 10 * 60 * 1000
+    });
+}
 
 async function fetchUsers() {
     const controller = new AbortController()
@@ -100,20 +117,41 @@ export function useUsers() {
     })
 }
 
-async function fetchAuth() {
-    const res = await fetch('http://localhost:3001/api/auth', {
-        credentials: 'include'
-    });
-    if (!res.ok) throw new Error("Failed to fetch auth");
-    const data = await res.json();
-    return data.user;
+async function updateUser(user) {
+    const res = await fetch(`http://localhost:3001/api/users/updateUser/${user._id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user)
+    })
+    if (!res.ok) throw new Error("Failed to update client");
+    return res.json()
+}
+export function useUpdateUser() {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: updateUser,
+        onSuccess: () => {
+            queryClient.invalidateQueries(["users"])
+        }
+    })
 }
 
-export function useAuthQuery() {
-    return useQuery({
-        queryKey: ['auth'],
-        queryFn: fetchAuth,
-        retry: false,
-        staleTime: 10 * 60 * 1000
-    });
+async function deleteUser(id) {
+    const confirmed = window.confirm("Are you sure you want to delete this customer?")
+    if (!confirmed) return
+
+    const res = await fetch(`http://localhost:3001/api/users/deleteUser/${id}`, {
+        method: "DELETE",
+    })
+    if (!res.ok) throw new Error("Failed to delete client");
+    return res.json()
+}
+export function useDeleteUser() {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: deleteUser,
+        onSuccess: () => {
+            queryClient.invalidateQueries(["users"])
+        }
+    })
 }

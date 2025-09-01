@@ -1,20 +1,11 @@
 import styles from '../styles/Table.module.css'
 import { FaCog } from 'react-icons/fa'
 import ActionMenu from './ActionMenu'
-// import { useNavigate } from 'react-router-dom';
-// import { useCustomers } from '../hooks/useCustomers';
 
-
-
-
-export default function Table({ data = [], onRowClick }) {
-    // const { data: customers, isLoading, error } = useCustomers()
+export default function Table({ data = [], onRowClick, onDelete }) {
     if (!data.length) return <p>No data available</p>;
 
     const headers = Object.keys(data[0])
-    // const navigate = useNavigate();
-    // if (isLoading) return <p>Loading...</p>;
-    // if (error) return <p style={{ color: 'red' }}>Error: {error.message}</p>;
 
     return (
         <div className={styles.tableWrapper}>
@@ -39,7 +30,7 @@ export default function Table({ data = [], onRowClick }) {
                                     <td key={key} className={styles.td}>{row[key]}</td>
                                 ) : null))}
                             <td className={styles.td}>
-                                <ActionMenu onClick={e => e.stopPropagation()} customerId={row._id} />
+                                <ActionMenu onClick={e => e.stopPropagation()} id={row._id} onDelete={onDelete} />
                             </td>
                         </tr>
                     ))}

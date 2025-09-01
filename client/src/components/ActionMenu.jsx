@@ -5,18 +5,16 @@ import MenuItem from '@mui/material/MenuItem';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { useDeleteCustomer } from "../hooks/useCustomers";
-
 import { useNavigate } from 'react-router-dom';
 
 
-export default function ActionMenu({ onClick, customerId }) {
+export default function ActionMenu({ onClick, id, onDelete }) {
     const [anchorEl, setAnchorEl] = useState(null);
-    const deleteCustomer = useDeleteCustomer()
     const navigate = useNavigate()
     const handleClick = (event) => {
         setAnchorEl(anchorEl ? null : event.currentTarget)
     };
+
 
     return (
         <div onClick={onClick}>
@@ -26,11 +24,11 @@ export default function ActionMenu({ onClick, customerId }) {
                 open={Boolean(anchorEl)}
                 onClose={() => setAnchorEl(null)}
             >
-                <MenuItem onClick={() => navigate(`/clients/${customerId}`)}>
+                <MenuItem onClick={() => navigate(`${id}?edit=true`)}>
                     <EditIcon fontSize="small" style={{ marginRight: 8 }} />
                     Edit
                 </MenuItem>
-                <MenuItem onClick={() => deleteCustomer.mutate(customerId)}>
+                <MenuItem onClick={() => onDelete.mutate(id)}>
                     <DeleteIcon fontSize="small" style={{ marginRight: 8, color: 'red' }} />
                     Delete
                 </MenuItem>

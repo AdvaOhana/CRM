@@ -1,46 +1,50 @@
 import { useState } from "react"
 import Button from "../components/Button"
-import { useParams, useNavigate } from "react-router-dom";
-import { useCustomers, useUpdateCustomer, useDeleteCustomer } from "../hooks/useCustomers";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 
 
-export default function EditPage() {
+export default function EditPage({ useItems, useUpdate, useDelete, clientOrUser, redirectPath }) {
     const { id } = useParams()
-    const { data: customers, isLoading, error } = useCustomers();
-    const updateCustomer = useUpdateCustomer();
-    const deleteCustomer = useDeleteCustomer();
-    const [edit, setEdit] = useState(false)
+    const [searchParams, setSearchParams] = useSearchParams();
+    const { data: items, isLoading, error } = useItems();
+    const updateItem = useUpdate();
+    const deleteItem = useDelete();
+    const [edit, setEdit] = useState(searchParams.get('edit') === 'true')
     const navigate = useNavigate()
 
 
-    const customer = customers.find((customer) => customer._id === id)
-    const [data, setData] = useState(customer)
+    const item = items?.find((item) => item._id === id)
+    const [data, setData] = useState(item)
 
     if (isLoading) return <p>Loading...</p>;
     if (error) return <p style={{ color: 'red' }}>Error: {error.message}</p>;
 
     function handleSubmit(e) {
         e.preventDefault()
-        updateCustomer.mutate(data)
+        updateItem.mutate(data)
         setEdit(false)
-        navigate("/clients")
+        navigate(redirectPath)
 
     }
     function handleChange(e) {
         const { id, value } = e.target
-
         setData((current) => ({ ...current, [id]: value }))
     }
     function handleDelete() {
-        deleteCustomer.mutate(data._id)
-        navigate("/clients")
+        deleteItem.mutate(data._id)
+        navigate(redirectPath)
 
+    }
+
+    function handleEdit() {
+        setSearchParams(edit ? { edit: 'false' } : { edit: 'true' })
+        setEdit((edit) => !edit)
     }
 
     return (
         <div>
-            <h1>Edit Customer</h1>
-            <Button onClick={() => setEdit((edit) => !edit)}>{edit ? 'Cancel' : 'Edit'}</Button>
+            <h1>Edit {clientOrUser}</h1>
+            <Button onClick={handleEdit}>{edit ? 'Cancel' : 'Edit'}</Button>
             <form onSubmit={handleSubmit}>
                 {Object.entries(data).map(([key, value]) => (
                     key !== "_id" ? (

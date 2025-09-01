@@ -14,6 +14,7 @@
   transition: transform 0.2s;
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
 }
 
 .card:hover {

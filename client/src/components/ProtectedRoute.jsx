@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom"
 import { useAuthQuery } from "../hooks/useUsers.js"
 
-function ProtectedRoute({ roles }) {
+export default function ProtectedRoute({ roles }) {
     const { data: user, isLoading } = useAuthQuery()
 
     if (isLoading) {
@@ -16,4 +16,3 @@ function ProtectedRoute({ roles }) {
     return <Outlet />
 }
 
-export default ProtectedRoute

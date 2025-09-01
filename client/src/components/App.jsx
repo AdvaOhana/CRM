@@ -1,11 +1,12 @@
 import CustomersPage from '../pages/CustomersPage';
-import EditPage from '../pages/EditPage';
 import { Route, Routes } from 'react-router-dom'
 import Register from './Register';
 import Login from './Login';
 import AppLayOut from './AppLayOut';
 import HomePage from '../pages/HomePage';
 import UsersPage from '../pages/UsersPage'
+import EditUsers from '../components/EditUsers';
+import EditClients from '../components/EditClients';
 
 import { ViewProvider } from '../contexts/ViewContext';
 import { BrowserRouter } from 'react-router-dom';
@@ -28,14 +29,15 @@ export default function App() {
                         <Route element={<AppLayOut />}>
                             <Route path="home" element={<HomePage />} />
 
-                            <Route element={<ProtectedRoute roles={['admin']} />}>
+                            <Route path='users' element={<ProtectedRoute roles={['admin']} />}>
+                                <Route index element={<UsersPage />} />
                                 <Route path="register" element={<Register />} />
-                                <Route path='users' element={<UsersPage />} />
+                                <Route path=":id" element={<EditUsers />} />
                             </Route>
 
                             <Route path="clients">
                                 <Route index element={<CustomersPage />} />
-                                <Route path=":id" element={<EditPage />} />
+                                <Route path=":id" element={<EditClients />} />
                             </Route>
                         </Route>
                     </Route>

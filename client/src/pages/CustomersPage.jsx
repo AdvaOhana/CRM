@@ -1,5 +1,5 @@
 import { FaUserPlus, FaThLarge, FaTable } from 'react-icons/fa';
-import { useCustomers } from '../hooks/useCustomers';
+import { useCustomers, useDeleteCustomer } from '../hooks/useCustomers';
 import { useView } from '../contexts/ViewContext'
 import { useState } from 'react';
 import Cards from '../components/Cards'
@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 export default function CustomersPage() {
     const { isCard, toggleView } = useView()
     const { data: customers, isLoading, error } = useCustomers();
+    const deleteCustomer = useDeleteCustomer();
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -32,8 +33,8 @@ export default function CustomersPage() {
         <div>
             <Button onClick={toggleView}>Switch to {!isCard ? <> Card < FaThLarge /></> : <>Table < FaTable /></>}</Button>
             <Button onClick={handleOpen}><FaUserPlus /></Button>
-            {!isCard ? <Table data={customers} onRowClick={customer => navigate(`${customer._id}`)} /> :
-                <Cards data={customers} onCardClick={customer => navigate(`${customer._id}`)} />}
+            {!isCard ? <Table data={customers} onRowClick={customer => navigate(`${customer._id}?edit=false`)} onDelete={deleteCustomer} /> :
+                <Cards data={customers} onCardClick={customer => navigate(`${customer._id}?edit=false`)} onDelete={deleteCustomer} />}
         </div>
         <>
             <Dialog open={open} onClose={handleOpen}>
