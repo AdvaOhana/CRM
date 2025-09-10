@@ -1,15 +1,15 @@
 import { Router } from "express";
-import { getClientsService, createClientsService, updateClientService, deleteClientService } from '../services/clientService.js'
+import { getClients, createClients, updateClient, deleteClient } from "../db/dbUtils.js";
 import { validateClient } from "../middleware/validate.js";
 export const clientRouter = Router();
 
 clientRouter.get('/', async (req, res) => {
 
-    return res.status(200).json({ clients: await getClientsService() })
+    return res.status(200).json({ clients: await getClients() })
 })
 clientRouter.post('/addClient', validateClient, async (req, res) => {
     try {
-        await createClientsService(req.body)
+        await createClients(req.body)
         return res.status(200).json({ message: "created client successfully" })
     } catch (error) {
         return res.status(400).json({ error: error.message })
@@ -18,7 +18,7 @@ clientRouter.post('/addClient', validateClient, async (req, res) => {
 clientRouter.patch('/updateClient/:id', async (req, res) => {
     try {
         const id = req.params
-        await updateClientService(id, req.body)
+        await updateClient(id, req.body)
         return res.status(200).json({ message: "updated client successfully" })
 
     } catch (error) {
@@ -28,7 +28,7 @@ clientRouter.patch('/updateClient/:id', async (req, res) => {
 clientRouter.delete('/deleteClient/:id', async (req, res) => {
     try {
         const id = req.params
-        await deleteClientService(id)
+        await deleteClient(id)
         return res.status(200).json({ message: "deleted client successfully" })
 
     } catch (error) {

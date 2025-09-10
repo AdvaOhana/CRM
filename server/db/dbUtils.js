@@ -14,6 +14,8 @@ export async function getClients() {
 }
 export async function createClients({ name, phone, email, description }) {
     try {
+        if (!name || !phone || !email) throw new Error("Data missing");
+
         await clientsCollection.insertOne({
             name,
             phone,
@@ -38,6 +40,7 @@ export async function updateClient(id, { name, phone, email, description }) {
 }
 export async function deleteClient({ id }) {
     try {
+
         await clientsCollection.deleteOne({ _id: new ObjectId(id) })
     } catch (error) {
         console.error(error)
@@ -84,6 +87,7 @@ export async function deleteUser({ id }) {
 }
 export async function registerUser({ name, role, email, phone, password }) {
     try {
+        if (!name || !phone || !email || !role || !password) throw new Error("Data missing");
         const existingUser = await usersCollection.findOne({ email });
         if (existingUser) throw new Error("User already exists");
 
@@ -104,6 +108,8 @@ export async function registerUser({ name, role, email, phone, password }) {
 }
 export async function loginUser({ email, password }) {
     try {
+        if (!email || !password) throw new Error("Please enter email and password");
+
         const user = await usersCollection.findOne({ email });
         if (!user) throw new Error("Invalid email or password");
 

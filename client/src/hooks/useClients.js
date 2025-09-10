@@ -85,7 +85,7 @@ async function deleteClients(id) {
     })
     const data = await res.json()
     if (!res.ok) throw new Error(data.message || "Failed to delete client");
-    return res.json()
+    return data
 }
 export function useDeleteClients() {
     const queryClient = useQueryClient()
