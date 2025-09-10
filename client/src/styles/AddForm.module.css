@@ -1,0 +1,63 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 10px 30px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.field input,
+.field textarea {
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #111827;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+  resize: none;
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: #08090b;
+  box-shadow: 0 0 0 2px rgba(22, 22, 23, 0.3);
+}
+
+/* .actions {
+  margin-top: 8px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.actions button {
+  padding: 10px 20px;
+  background: rgb(220, 163, 58);
+  color: black;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.actions button:hover {
+  background: rgb(198, 137, 25);
+}
+
+.actions button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+} */

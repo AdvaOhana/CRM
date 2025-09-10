@@ -5,7 +5,7 @@ export async function getClientsService() {
     return await getClients()
 }
 export async function createClientsService({ name, phone, email, description }) {
-    if (!name || !phone || !email || !description) throw new Error("Data missing");
+    if (!name || !phone || !email) throw new Error("Data missing");
 
     return await createClients({ name, phone, email, description })
 }

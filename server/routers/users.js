@@ -1,21 +1,22 @@
 import { Router } from "express";
-import { getUserService, createUserService, updateUserService, deleteUserService, loginUserService, registerUserService } from "../services/userService.js";
+import { getUserService, updateUserService, deleteUserService, loginUserService, registerUserService } from "../services/userService.js";
 import { verifyToken, authRole } from "../middleware/auth.js";
+import { validateUser, validateLogin } from "../middleware/validate.js";
 export const userRouter = Router();
 
 userRouter.get('/', async (req, res) => {
     return res.status(200).json({ users: await getUserService() })
 
 })
-userRouter.post('/createUser', async (req, res) => {
-    try {
-        await createUserService(req.body)
-        return res.status(200).json({ message: "created user successfully" })
-    } catch (error) {
-        return res.status(400).json({ error: error.message })
-    }
-})
-userRouter.post('/login', verifyToken, async (req, res) => {
+// userRouter.post('/createUser', async (req, res) => {
+//     try {
+//         await createUserService(req.body)
+//         return res.status(200).json({ message: "created user successfully" })
+//     } catch (error) {
+//         return res.status(400).json({ error: error.message })
+//     }
+// })
+userRouter.post('/login', verifyToken, validateLogin, async (req, res) => {
     try {
 
         const token = await loginUserService(req.body);
@@ -39,7 +40,7 @@ userRouter.post('/logout', async (req, res) => {
     return res.status(200).json({ message: "Logout successful" });
 
 })
-userRouter.post('/register', authRole, async (req, res) => {
+userRouter.post('/register', authRole, validateUser, async (req, res) => {
     try {
         await registerUserService(req.body);
         return res.status(201).json({ message: "User registered successfully" });

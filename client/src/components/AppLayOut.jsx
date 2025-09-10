@@ -4,7 +4,7 @@ import styles from '../styles/App.module.css'
 
 export default function AppLayOut() {
     return (
-        <>
+        <div className={styles.layout}>
             <header>
                 <h1 className={styles.title}>CRM - Application</h1>
                 <Navigation />
@@ -12,5 +12,5 @@ export default function AppLayOut() {
             <div>
                 <Outlet />
             </div>
-        </>)
+        </div>)
 }

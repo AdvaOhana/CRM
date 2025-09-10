@@ -23,3 +23,11 @@ width: 100%;
 background-color:  rgb(198, 137, 25);
 height: 2px;
 }
+
+.layout{
+  padding: 30px;
+  .layout-btn{
+    margin-left: auto;
+  }
+
+}

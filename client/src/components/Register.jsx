@@ -2,7 +2,8 @@ import { useState } from "react";
 import styles from '../styles/Register.module.css'
 import { useRegister } from "../hooks/useUsers.js";
 export default function Register() {
-    const register = useRegister()
+    const { mutate: register, isLoading, error } = useRegister()
+
     const [form, setForm] = useState({
         name: "",
         role: "employee",
@@ -13,9 +14,7 @@ export default function Register() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(form);
-
-        register.mutate(form)
+        register(form)
     }
 
     function handleChange(e) {
@@ -29,10 +28,12 @@ export default function Register() {
                 <div className={styles.card}>
                     <h1 className={styles.title}>Create Account</h1>
                     <p className={styles.subtitle}>Fill in your details to register.</p>
-
+                    {error && (
+                        <p style={{ color: "red" }}>Error: {error.message}</p>
+                    )}
                     <form onSubmit={handleSubmit} className={styles.form}>
                         <div className={styles.field}>
-                            <label htmlFor="name">Name</label>
+                            <label htmlFor="name">Name:</label>
                             <input
                                 id="name"
                                 name="name"
@@ -42,7 +43,7 @@ export default function Register() {
                             />
                         </div>
                         <div className={styles.field}>
-                            <label htmlFor="role">Role</label>
+                            <label htmlFor="role">Role:</label>
                             <select
                                 id="role"
                                 name="role"
@@ -55,7 +56,7 @@ export default function Register() {
                             <p className={styles.helperText}>Choose user permissions.</p>
                         </div>
                         <div className={styles.field}>
-                            <label htmlFor="email">Email</label>
+                            <label htmlFor="email">Email:</label>
                             <input
                                 id="email"
                                 name="email"
@@ -65,7 +66,7 @@ export default function Register() {
                             />
                         </div>
                         <div className={styles.field}>
-                            <label htmlFor="phone">Phone</label>
+                            <label htmlFor="phone">Phone:</label>
                             <input
                                 id="phone"
                                 name="phone"
@@ -76,7 +77,7 @@ export default function Register() {
                         </div>
 
                         <div className={styles.field}>
-                            <label htmlFor="password">Password</label>
+                            <label htmlFor="password">Password:</label>
                             <input
                                 id="password"
                                 name="password"
@@ -87,13 +88,11 @@ export default function Register() {
                         </div>
                         <div className={styles.actions}>
                             <button type="submit" className={styles.submitBtn}>
-                                Register
+                                {isLoading ? "Registering..." : "Register"}
+
                             </button>
                         </div>
                     </form>
-                    <div className={styles.footer}>
-                        <p>By registering, you agree to our Terms & Privacy Policy.</p>
-                    </div>
                 </div>
             </div>
         </div>

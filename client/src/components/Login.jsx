@@ -10,12 +10,12 @@ export default function Login() {
 
     useEffect(() => {
         if (user && !isLoadingUser) {
-            navigate('/home')
+            navigate('/about')
         }
     }, [user, isLoadingUser, navigate])
 
     const [form, setForm] = useState({
-        email: "hdsjf@jjkkkkkkkj.com",
+        email: "",
         password: ""
     })
     function handleSubmit(e) {
@@ -27,15 +27,14 @@ export default function Login() {
         setForm((f) => ({ ...f, [name]: value }))
     }
     return (
-        <div className={styles.pageWrapper}>
-            <div className={styles.cardWrapper}>
+        <div className={styles.loginPageWrapper}>
+            <div className={styles.loginWrapper}>
                 <div className={styles.card}>
                     <h1 className={styles.title}>Login</h1>
                     <p className={styles.subtitle}>Enter your details to access your account.</p>
-
-                    <form onSubmit={handleSubmit} className={styles.form}>
+                    <form onSubmit={handleSubmit} className={styles.loginForm}>
                         <div className={styles.field}>
-                            <label htmlFor="email">Email</label>
+                            <label htmlFor="email">Email:</label>
                             <input
                                 id="email"
                                 name="email"
@@ -47,7 +46,7 @@ export default function Login() {
                         </div>
 
                         <div className={styles.field}>
-                            <label htmlFor="password">Password</label>
+                            <label htmlFor="password">Password:</label>
                             <input
                                 id="password"
                                 name="password"

@@ -5,6 +5,8 @@ import Table from '../components/Table'
 import Button from '../components/Button'
 import { useUsers, useDeleteUser } from '../hooks/useUsers';
 import { useNavigate } from 'react-router-dom';
+import '../global.css';
+
 
 export default function UsersPage() {
 
@@ -18,8 +20,8 @@ export default function UsersPage() {
     if (error) return <p style={{ color: 'red' }}>Error: {error.message}</p>;
 
 
-    return <div>
-        <Button onClick={toggleView}>Switch to {!isCard ? <> Card < FaThLarge /></> : <>Table < FaTable /></>}</Button>
+    return <div className="layout">
+        <Button className={"layout-btn"} onClick={toggleView}>Switch to {!isCard ? <> Card < FaThLarge /></> : <>Table < FaTable /></>}</Button>
         {!isCard ? <Table data={users} onRowClick={user => navigate(`${user._id}?edit=false`)} onDelete={deleteUser} />
             : <Cards data={users} onCardClick={user => navigate(`${user._id}?edit=false`)} onDelete={deleteUser} />}
     </div>

@@ -1,12 +1,13 @@
 import { Router } from "express";
 import { getClientsService, createClientsService, updateClientService, deleteClientService } from '../services/clientService.js'
+import { validateClient } from "../middleware/validate.js";
 export const clientRouter = Router();
 
 clientRouter.get('/', async (req, res) => {
 
     return res.status(200).json({ clients: await getClientsService() })
 })
-clientRouter.post('/addClient', async (req, res) => {
+clientRouter.post('/addClient', validateClient, async (req, res) => {
     try {
         await createClientsService(req.body)
         return res.status(200).json({ message: "created client successfully" })

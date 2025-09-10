@@ -1,37 +1,47 @@
 import { useState } from 'react';
-import { useAddCustomer } from '../hooks/useCustomers';
+import { useAddClients } from '../hooks/useClients';
+import styles from '../styles/AddForm.module.css'
+import Button from './Button'
 
 export default function AddForm() {
-    const { mutate: addCustomer, isPending } = useAddCustomer()
+    const { mutate: addClient, isPending, error } = useAddClients()
 
-    const [name, setName] = useState("")
-    const [phone, setPhone] = useState("")
-    const [email, setEmail] = useState("")
-    const [description, setDescription] = useState("")
+    const [form, setForm] = useState({
+        name: "",
+        phone: "",
+        email: "",
+        description: ""
+    });
+    function handleChange(e) {
+        const { name, value } = e.target;
+        setForm(prev => ({ ...prev, [name]: value }));
+    }
 
     function handleSubmit(e) {
         e.preventDefault()
-        if (!name || !phone || !email) return
-
-        const newCustomer = {
-            id: Date.now(),
-            name,
-            phone,
-            email,
-            description
-        }
-        addCustomer(newCustomer)
-        setName("")
-        setPhone("")
-        setEmail("")
-        setDescription("")
+        addClient(form)
     }
-    return (<form onSubmit={handleSubmit}>
-        <input type='text' placeholder='Full Name' value={name} onChange={(e) => setName(e.target.value)} />
-        <input type='text' placeholder='Phone' value={phone} onChange={(e) => setPhone(e.target.value)} />
-        <input type='text' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} />
-        <input type='text' placeholder='Description' value={description} onChange={(e) => setDescription(e.target.value)} />
-        <button disable={isPending}>{isPending ? 'Creating...' : 'Add'}</button>
+    return (<form onSubmit={handleSubmit} className={styles.form}>
+        {error && (
+            <p style={{ color: "red" }}>Error: {error.message}</p>
+        )}
+        <div className={styles.field}>
+            <label>Full Name:</label>
+            <input type='text' placeholder='Full Name' name='name' value={form.name} onChange={handleChange} />
+        </div>
+        <div className={styles.field}>
+            <label>Phone:</label>
+            <input type='text' placeholder='Phone' name='phone' value={form.phone} onChange={handleChange} />
+        </div>
+        <div className={styles.field}>
+            <label>Email:</label>
+            <input type='text' placeholder='Email' name='email' value={form.email} onChange={handleChange} />
+        </div>
+        <div className={styles.field}>
+            <label>Description:</label>
+            <textarea type='text' placeholder='Description' name='description' value={form.description} onChange={handleChange} />
+        </div>
+        <Button disable={isPending}>{isPending ? 'Creating...' : 'Add'}</Button>
     </form>
     )
 }

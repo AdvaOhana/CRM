@@ -1,0 +1,98 @@
+.pageWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  height: 100%;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  padding: 24px 28px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 0.9rem;
+  font-weight: 780;
+  color: #374151;
+  text-transform: capitalize;
+}
+
+.field input {
+  padding:5px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  font-size: 0.95rem;
+  color: #111827;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.field input:focus {
+  border-color: #08090b;
+  box-shadow: 0 0 0 2px rgba(22, 22, 23, 0.3);
+}
+
+.value {
+  font-size: 1rem;
+  color: #111827;
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn{
+  height: fit-content;
+}
+
+.actionsBottom {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.delete{
+  background-color:transparent;
+  border: 2px solid #ef4444;;
+  color: #ef4444;
+  padding:  10px 5px
+
+}
+
+.delete:hover{
+    background-color: #ef4444;;
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+.primary{
+padding: 10px 30px;
+}

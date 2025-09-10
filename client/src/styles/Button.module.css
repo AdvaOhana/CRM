@@ -1,4 +1,4 @@
-.button {
+/* .button {
   background-color: rgb(220, 163, 58);
   color: black;
   border: none;
@@ -13,3 +13,36 @@
 .button:hover {
   background-color: rgb(198, 137, 25);
 }
+.container {
+  display: flex;
+  justify-content: end;
+} */
+
+.button {
+  background-color: rgb(220, 163, 58);
+  color: black;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.button:hover {
+  background-color: rgb(198, 137, 25);
+}
+
+
+/* 
+.container {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin: 10px;
+  padding: 20px;
+} */

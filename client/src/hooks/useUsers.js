@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 async function logoutUser() {
@@ -20,9 +21,7 @@ export function useLogoutUser() {
             queryClient.clear()
             navigate('/', { replace: true })
         }
-
     })
-
     return { logoutUserMutate }
 }
 async function register(user) {
@@ -34,18 +33,21 @@ async function register(user) {
         credentials: 'include'
 
     })
-    if (!res.ok) throw new Error("Failed to register")
-    return res.json()
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(data.message || "Failed to register")
+    return data
 }
 export function useRegister() {
     const queryClient = useQueryClient()
-
     return useMutation({
         mutationFn: register,
         onSuccess: () => {
             queryClient.invalidateQueries(["users"])
-
-            console.log("Created")
+            toast.success("Registered successfully! Now login ")
+        },
+        onError: (error) => {
+            toast.error(error.message || "Failed to register")
         }
 
     })
@@ -58,8 +60,9 @@ async function login(user) {
         body: JSON.stringify(user),
         credentials: 'include'
     })
-    if (!res.ok) throw new Error("Failed to login")
-    return res.json()
+    const data = await res.json()
+    if (!res.ok) throw new Error(data.message || "Failed to login")
+    return data
 }
 export function useLogin() {
     const queryClient = useQueryClient()
@@ -69,7 +72,10 @@ export function useLogin() {
         onSuccess: async () => {
             const res = await fetchAuth()
             queryClient.setQueryData(['auth'], res);
-            console.log("Login successful");
+            toast.success("Login successfully!")
+        },
+        onError: (error) => {
+            toast.error(error.message || "Failed to login")
         }
     })
 }
@@ -123,8 +129,9 @@ async function updateUser(user) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(user)
     })
-    if (!res.ok) throw new Error("Failed to update client");
-    return res.json()
+    const data = await res.json()
+    if (!res.ok) throw new Error(data.message || "Failed to update client");
+    return data
 }
 export function useUpdateUser() {
     const queryClient = useQueryClient()
@@ -132,6 +139,10 @@ export function useUpdateUser() {
         mutationFn: updateUser,
         onSuccess: () => {
             queryClient.invalidateQueries(["users"])
+            toast.success("Update user successfully!")
+        },
+        onError: (error) => {
+            toast.error(error.message || "Failed to update")
         }
     })
 }
@@ -143,8 +154,9 @@ async function deleteUser(id) {
     const res = await fetch(`http://localhost:3001/api/users/deleteUser/${id}`, {
         method: "DELETE",
     })
-    if (!res.ok) throw new Error("Failed to delete client");
-    return res.json()
+    const data = await res.json()
+    if (!res.ok) throw new Error(data.message || "Failed to delete client");
+    return data
 }
 export function useDeleteUser() {
     const queryClient = useQueryClient()
@@ -152,6 +164,10 @@ export function useDeleteUser() {
         mutationFn: deleteUser,
         onSuccess: () => {
             queryClient.invalidateQueries(["users"])
+            toast.success("Deleted user successfully!")
+        },
+        onError: (error) => {
+            toast.error(error.message || "Failed to delete")
         }
     })
 }
