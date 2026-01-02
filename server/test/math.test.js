@@ -1,4 +1,4 @@
-import { sum, doul, p } from './math'
+const { sum, doul, p } = require("./math")
 
 test("sum 2+3=5", () => expect(sum(2, 3)).toBe(5));
 test("doul 6 % 2 == 0", () => expect(doul(6)).toBe(true));

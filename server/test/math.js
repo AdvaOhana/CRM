@@ -1,11 +1,16 @@
-export function sum(a, b) {
+function sum(a, b) {
     return a + b;
 }
 
-export function doul(a) {
+function doul(a) {
     return a % 2 == 0;
 }
 
-export function p(a, b) {
+function p(a, b) {
     return a - b;
+}
+module.exports = {
+    sum,
+    doul,
+    p
 }
