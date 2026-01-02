@@ -18,7 +18,9 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies
-        run: ~/server/npm install
+        working-directory: server
+        run: npm install
 
       - name: Run tests
-        run: ~/server/npm test
+        working-directory: server
+        run: npm test
