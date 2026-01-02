@@ -1,5 +1,4 @@
 import ClientsPage from '../pages/ClientsPage';
-import { Route, Routes } from 'react-router-dom'
 import Register from './Register';
 import Login from './Login';
 import AppLayOut from './AppLayOut';
@@ -9,7 +8,7 @@ import EditUsers from '../components/EditUsers';
 import EditClients from '../components/EditClients';
 
 import { ViewProvider } from '../contexts/ViewContext';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Toaster } from 'react-hot-toast'
