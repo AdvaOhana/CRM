@@ -89,7 +89,9 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
-          source: "docker-compose.yml,client/nginx.conf"
+          source: |
+            docker-compose.yml
+            client/nginx.conf
           target: "~/crm"
 
       - name: Deploy on VM
