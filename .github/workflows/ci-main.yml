@@ -52,7 +52,6 @@ jobs:
           context: ./server
           file: ./server/Dockerfile
           push: true
-          platforms: linux/arm64
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/crm-server:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/crm-server:${{ github.sha }}
@@ -63,7 +62,6 @@ jobs:
           context: ./client
           file: ./client/Dockerfile
           push: true
-          platforms: linux/arm64
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/crm-client:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/crm-client:${{ github.sha }}
