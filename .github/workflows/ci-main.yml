@@ -1,4 +1,4 @@
-name: CI/CD - Test, Build & Deploy S-Bin
+name: CI/CD - Test, Build & Deploy
 
 on:
   push:
@@ -78,42 +78,36 @@ jobs:
   # --------------------
   # Deploy
   # --------------------
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
+deploy:
+  runs-on: ubuntu-latest
+  needs: build
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Copy docker-compose and nginx
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          source: |
-            docker-compose.yml
-            client/nginx.conf
-          target: ~/crm
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Deploy on VM
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            set -e
-            cd ~/crm
+    - name: Copy docker-compose and nginx
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        source: docker-compose.yml,client/nginx.conf
+        target: ~/crm
 
-            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Deploy on VM
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          set -e
+          cd ~/crm
 
-            docker compose pull
-            docker compose up -d --force-recreate
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
 
-            echo "Deployment completed successfully"
+          docker compose pull
+          docker compose up -d --force-recreate
 
-      - name: Debug files
-        run: |
-          ls -la
-          ls -la client || true
+          echo "Deployment completed successfully"
