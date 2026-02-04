@@ -53,6 +53,9 @@ jobs:
           file: ./server/Dockerfile
           push: true
           platforms: linux/arm64
+          provenance: false
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/crm-server:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/crm-server:${{ github.sha }}
@@ -64,6 +67,9 @@ jobs:
           file: ./client/Dockerfile
           push: true
           platforms: linux/arm64
+          provenance: false
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/crm-client:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/crm-client:${{ github.sha }}
