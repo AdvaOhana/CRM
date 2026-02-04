@@ -83,6 +83,8 @@ jobs:
     needs: build
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Copy docker-compose and nginx
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -92,7 +94,7 @@ jobs:
           source: |
             docker-compose.yml
             client/nginx.conf
-          target: "~/crm"
+          target: ~/crm
 
       - name: Deploy on VM
         uses: appleboy/ssh-action@v1.0.3
@@ -110,3 +112,8 @@ jobs:
             docker compose up -d --force-recreate
 
             echo "Deployment completed successfully"
+
+      - name: Debug files
+        run: |
+          ls -la
+          ls -la client || true
