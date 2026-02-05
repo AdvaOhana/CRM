@@ -1,22 +1,20 @@
 version: "3.9"
 
 services:
-  server:
-    image: adva1/crm-server:latest
-    container_name: crm-server
+  crm_server:
+    image: adva1/crm_server:latest
+    container_name: crm_server
     restart: unless-stopped
     env_file:
       - ./server/.env
     expose:
       - "3000"
 
-  client:
-    image: adva1/crm-client:latest
-    container_name: crm-client
+  crm_client:
+    image: adva1/crm_client:latest
+    container_name: crm_client
     restart: unless-stopped
     depends_on:
-      - server
+      - crm_server
     expose:
       - "80"
-    volumes:
-      - ./client/nginx.conf:/etc/nginx/conf.d/default.conf:ro
