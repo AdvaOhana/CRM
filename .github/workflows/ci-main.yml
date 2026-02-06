@@ -57,8 +57,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/crm-server:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/crm-server:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/crm_server:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/crm_server:${{ github.sha }}
 
       - name: Build & Push Client Image
         uses: docker/build-push-action@v5
@@ -71,8 +71,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/crm-client:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/crm-client:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/crm_client:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/crm_client:${{ github.sha }}
 
   deploy:
     runs-on: ubuntu-latest

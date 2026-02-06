@@ -1,20 +1,35 @@
 version: "3.9"
 
 services:
+  crm-db:
+    image: mongo:latest
+    container_name: crm-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - crm_db_data:/data/db
+    env_file: .env 
+
   crm_server:
     image: adva1/crm_server:latest
     container_name: crm_server
     restart: unless-stopped
+    environment:
+      - MONGO_URI=mongodb://crm-db:27017/crm_db 
+    depends_on:
+      - crm-db 
     env_file:
       - ./server/.env
-    expose:
-      - "3000"
 
   crm_client:
     image: adva1/crm_client:latest
     container_name: crm_client
     restart: unless-stopped
+    ports:
+      - "8081:80"  
     depends_on:
       - crm_server
-    expose:
-      - "80"
+
+volumes:
+  crm_db_data: 
