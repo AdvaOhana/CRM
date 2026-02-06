@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = "https://crm-adva.duckdns.org/api";
 
 async function fetchClients() {
     const controller = new AbortController()

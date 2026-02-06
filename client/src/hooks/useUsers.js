@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = "https://crm-adva.duckdns.org/api";
 
 async function logoutUser() {
 
