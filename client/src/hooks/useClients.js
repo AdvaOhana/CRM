@@ -6,7 +6,7 @@ async function fetchClients() {
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), 30000)
     try {
-        const res = await fetch('http://localhost:3001/api/clients', { signal: controller.signal })
+        const res = await fetch('http://localhost:3000/api/clients', { signal: controller.signal })
         if (!res.ok) throw new Error("Failed to fetch clients");
         const data = await res.json()
         return data.clients
@@ -29,7 +29,7 @@ export function useClients() {
 }
 
 async function addClients(client) {
-    const res = await fetch('http://localhost:3001/api/clients/addClient', {
+    const res = await fetch('http://localhost:3000/api/clients/addClient', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(client)
@@ -53,7 +53,7 @@ export function useAddClients() {
 }
 
 async function updateClients(client) {
-    const res = await fetch(`http://localhost:3001/api/clients/updateClient/${client._id}`, {
+    const res = await fetch(`http://localhost:3000/api/clients/updateClient/${client._id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(client)
@@ -80,7 +80,7 @@ async function deleteClients(id) {
     const confirmed = window.confirm("Are you sure you want to delete this client?")
     if (!confirmed) return
 
-    const res = await fetch(`http://localhost:3001/api/clients/deleteClient/${id}`, {
+    const res = await fetch(`http://localhost:3000/api/clients/deleteClient/${id}`, {
         method: "DELETE",
     })
     const data = await res.json()

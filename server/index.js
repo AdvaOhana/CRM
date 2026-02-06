@@ -13,6 +13,7 @@ const app = express();
 app.use(
     cors({
         origin: [
+            "http://localhost:3001",
             "https://crm-adva.duckdns.org",
             "http://crm-adva.duckdns.org",
             "https://151.145.80.117:3000",
