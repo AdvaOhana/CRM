@@ -1,10 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import dotenv from "dotenv"
+dotenv.config()
 
 async function logoutUser() {
 
-    const res = await fetch('http://localhost:3000/api/users/logout', {
+    const res = await fetch(`${process.env.BASE_URL}/api/users/logout`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: 'include'
@@ -26,7 +28,7 @@ export function useLogoutUser() {
 }
 async function register(user) {
 
-    const res = await fetch('http://localhost:3000/api/users/register', {
+    const res = await fetch(`${process.env.BASE_URL}/api/users/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(user),
@@ -54,7 +56,7 @@ export function useRegister() {
 }
 
 async function login(user) {
-    const res = await fetch('http://localhost:3000/api/users/login', {
+    const res = await fetch(`${process.env.BASE_URL}/api/users/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(user),
@@ -80,7 +82,7 @@ export function useLogin() {
     })
 }
 async function fetchAuth() {
-    const res = await fetch('http://localhost:3000/api/auth', {
+    const res = await fetch(`${process.env.BASE_URL}/api/auth`, {
         credentials: 'include'
     });
     if (!res.ok) throw new Error("Failed to fetch auth");
@@ -101,7 +103,7 @@ async function fetchUsers() {
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), 30000)
     try {
-        const res = await fetch('http://localhost:3000/api/users', { signal: controller.signal })
+        const res = await fetch(`${process.env.BASE_URL}/api/users`, { signal: controller.signal })
         if (!res.ok) throw new Error("Failed to fetch users");
         const data = await res.json()
         return data.users
@@ -124,13 +126,13 @@ export function useUsers() {
 }
 
 async function updateUser(user) {
-    const res = await fetch(`http://localhost:3000/api/users/updateUser/${user._id}`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/users/updateUser/${user._id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(user)
     })
     const data = await res.json()
-    if (!res.ok) throw new Error(data.message || "Failed to update client");
+    if (!res.ok) throw new Error(data.message || "Failed to update user");
     return data
 }
 export function useUpdateUser() {
@@ -151,11 +153,11 @@ async function deleteUser(id) {
     const confirmed = window.confirm("Are you sure you want to delete this customer?")
     if (!confirmed) return
 
-    const res = await fetch(`http://localhost:3000/api/users/deleteUser/${id}`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/users/deleteUser/${id}`, {
         method: "DELETE",
     })
     const data = await res.json()
-    if (!res.ok) throw new Error(data.message || "Failed to delete client");
+    if (!res.ok) throw new Error(data.message || "Failed to delete user");
     return data
 }
 export function useDeleteUser() {
