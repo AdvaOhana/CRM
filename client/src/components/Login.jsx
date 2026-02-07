@@ -28,6 +28,7 @@ export default function Login() {
         const { name, value } = e.target
         setForm((f) => ({ ...f, [name]: value }))
     }
+
     if (showRegister) {
         return (
             <div>
