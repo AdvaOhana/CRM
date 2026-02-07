@@ -1,8 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-// const apiUrl = "https://crm-adva.duckdns.org/api";
-const apiUrl = "http://localhost:3000/api";
+const apiUrl = "https://crm-adva.duckdns.org/api";
+// const apiUrl = "http://localhost:3000/api";
 
 async function logoutUser() {
 
