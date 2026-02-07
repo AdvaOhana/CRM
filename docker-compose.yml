@@ -15,6 +15,8 @@ services:
     image: adva1/crm_server:latest
     container_name: crm_server
     restart: unless-stopped
+    ports:
+      - "3000:3000" 
     environment:
       - MONGO_URI=mongodb://crm-db:27017/crm_db 
     depends_on:
@@ -32,4 +34,4 @@ services:
       - crm_server
 
 volumes:
-  crm_db_data: 
+  crm_db_data:
