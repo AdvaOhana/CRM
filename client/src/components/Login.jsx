@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react'
 import styles from '../styles/Register.module.css'
 import { useAuthQuery, useLogin } from '../hooks/useUsers.js'
 import { useNavigate } from 'react-router-dom'
+import Register from './Register.jsx'
+
 export default function Login() {
     const navigate = useNavigate();
     const { mutate: login, isLoading, error, isSuccess } = useLogin()
     const { data: user, isLoading: isLoadingUser } = useAuthQuery()
-
+    const [showRegister, setShowRegister] = useState(false);
 
     useEffect(() => {
         if (user && !isLoadingUser) {
@@ -25,6 +27,28 @@ export default function Login() {
     function handleChange(e) {
         const { name, value } = e.target
         setForm((f) => ({ ...f, [name]: value }))
+    }
+    if (showRegister) {
+        return (
+            <div>
+                <Register />
+                <div style={{ textAlign: 'center', marginTop: '-20px', paddingBottom: '20px' }}>
+                    <p>Already have an account?</p>
+                    <button
+                        onClick={() => setShowRegister(false)}
+                        style={{
+                            background: 'none',
+                            border: 'none',
+                            color: 'orange',
+                            cursor: 'pointer',
+                            fontSize: '1rem'
+                        }}
+                    >
+                        Back to Login
+                    </button>
+                </div>
+            </div>
+        )
     }
     return (
         <div className={styles.loginPageWrapper}>
@@ -77,6 +101,19 @@ export default function Login() {
 
                     <div className={styles.footer}>
                         <p>Forgot your password? Contact your admin.</p>
+                        <p>Don't have an account?</p>
+                        <button
+                            onClick={() => setShowRegister(true)}
+                            style={{
+                                background: 'none',
+                                border: 'none',
+                                color: 'orange',
+                                cursor: 'pointer',
+                                fontWeight: 'bold'
+                            }}
+                        >
+                            Create new account
+                        </button>
                     </div>
                 </div>
             </div>

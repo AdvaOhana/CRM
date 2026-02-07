@@ -32,7 +32,7 @@ userRouter.post('/logout', async (req, res) => {
     return res.status(200).json({ message: "Logout successful" });
 
 })
-userRouter.post('/register', authRole, validateUser, async (req, res) => {
+userRouter.post('/register', async (req, res) => {
     try {
         await registerUser(req.body);
         return res.status(201).json({ message: "User registered successfully" });
@@ -55,6 +55,15 @@ userRouter.delete('/deleteUser/:id', async (req, res) => {
         const id = req.params
         await deleteUser(id)
         return res.status(200).json({ message: "deleted user successfully" })
+
+    } catch (error) {
+        return res.status(400).json({ error: error.message })
+    }
+})
+userRouter.post('/createUser', async (req, res) => {
+    try {
+        await createUser(req.body)
+        return res.status(200).json({ message: "created user successfully" })
 
     } catch (error) {
         return res.status(400).json({ error: error.message })
