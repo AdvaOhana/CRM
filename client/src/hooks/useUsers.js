@@ -2,7 +2,6 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 const apiUrl = "https://crm-adva.duckdns.org/api";
-// const apiUrl = "http://localhost:3000/api";
 
 async function logoutUser() {
 
@@ -170,29 +169,6 @@ export function useDeleteUser() {
         },
         onError: (error) => {
             toast.error(error.message || "Failed to delete")
-        }
-    })
-}
-async function createUser(user) {
-    const res = await fetch(`${apiUrl}/users/createUser`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user)
-    })
-    const data = await res.json()
-    if (!res.ok) throw new Error(data.message || "Failed to create user");
-    return data
-}
-export function useCreateUser() {
-    const queryClient = useQueryClient()
-    return useMutation({
-        mutationFn: createUser,
-        onSuccess: () => {
-            queryClient.invalidateQueries(["users"])
-            toast.success("Created user successfully!")
-        },
-        onError: (error) => {
-            toast.error(error.message || "Failed to create user")
         }
     })
 }
